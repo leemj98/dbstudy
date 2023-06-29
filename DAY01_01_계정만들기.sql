@@ -22,5 +22,18 @@
     3. 그냥 F5: 전체 스크립트 실행
 */
 
-CREATE USER C##GD IDENTIFIED BY 1111;
-GRANT CONNECT TO C##GD;
+-- CREATE USER C##GD IDENTIFIED BY 1111;
+-- GRANT CONNECT TO C##GD;
+
+/*
+    기존 계정을 삭제하는 방법
+    1. 계정이 가진 데이터가 없을 때 : DROP USER 계정명;
+    2. 계정이 가진 데이터가 있을 때 : DROP USER 계정명 CASCADE;
+*/
+-- DROP USER C##GD;
+
+-- 새로운 계정을 만드는 전체 스크립트
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+DROP USER GD CASCADE;
+CREATE USER GD IDENTIFIED BY 1111;
+GRANT DBA TO GD;
