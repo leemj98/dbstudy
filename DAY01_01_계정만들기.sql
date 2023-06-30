@@ -1,4 +1,4 @@
--- 한 줄 주석
+-- 한 줄 주석 
 
 /* 
     여러 줄 주석
@@ -33,7 +33,7 @@
 -- DROP USER C##GD;
 
 -- 새로운 계정을 만드는 전체 스크립트
-ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE; --계정명에 c## 안쓰게 해줌
 DROP USER GD CASCADE;
 CREATE USER GD IDENTIFIED BY 1111;
 GRANT DBA TO GD;
