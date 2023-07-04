@@ -10,6 +10,7 @@ SELECT DISTINCT DEPARTMENT_ID
 SELECT *
   FROM EMPLOYEES
  WHERE EMPLOYEE_ID =150;
+--  WHERE EMPLOYEE_ID ='150'; 라고 문자로 적어줘도 스스로 묵시적 형변환(TO_NUMBER('150')해서 옳은 답 나옴 
  
 -- 4. 사원 테이블에서 연봉이 10000 이상인 사원의 정보 조회하기
 SELECT *

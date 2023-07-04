@@ -96,37 +96,6 @@ COMMIT;
 
 
 
--- 수정
-/*
-    UPDATE 테이블
-    SET 업데이트할내용, 업데이트할 내용, ...
-    WHERE 조건식
-*/
--- 부서번호가 3인 부서의 지역을 '인천'으로 변경하시오
-UPDATE DEPARTMENT_T
-   SET LOCATION = '인천' --SET절의 등호(=)는 대입연산자
- WHERE DEPT_NO = 3; -- WHERE절의 등호(=)는 동등비교연산자
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
