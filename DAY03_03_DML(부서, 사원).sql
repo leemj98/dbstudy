@@ -46,7 +46,7 @@ CREATE SEQUENCE DEPT_SEQ -- (전부 디폴트값으로 적음)
     NOMINVALUE -- 번호의 하한선 없음
     NOCYCLE -- 상한선, 하한선 다음번호는 한바퀴 돌아서(번호 순환 없음), 상한선이나 하한선을 정했을 때 함께 쓰는 옵션
     CACHE 20 -- 한번에 20개씩 번호를 미리 만들어 둠
-    NOORDER -- 번호를 순서없이 사용 (순서대로 사용하지 않음) - 번호를 순서대로 사용하는 ORDER 옵션으로 바꿔서 시퀀스 생성함
+    NOORDER; -- 번호를 순서없이 사용 - 번호를 순서대로 사용하는 ORDER 옵션으로 바꿔서 시퀀스 생성함
 ; 
 */
 
@@ -76,3 +76,38 @@ INSERT INTO EMPLOYEE_T(EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
 COMMIT;
 
 ROLLBACK; -- 이전 커밋으로 돌아가는 것 (커밋을 취소하는 것 아님. 커밋 이후 작업을 취소하는 것)
+
+
+
+-- 수정
+/*
+    UPDATE 테이블
+       SET 업데이트할내용, 업데이트할 내용, ...
+     WHERE 조건식
+*/
+-- 1. 부서번호가 3인 부서의 지역을 '인천'으로 변경하시오
+UPDATE DEPARTMENT_T
+   SET LOCATION = '인천' --SET절의 등호(=)는 대입연산자
+ WHERE DEPT_NO = 3; -- WHERE절의 등호(=)는 동등비교연산자
+
+-- 2. 부서번호가 2인 부서에 근무하는 모든 사원들의 연봉을 50만원 증가
+UPDATE EMPLOYEE_T
+   SET SALARY = SALARY+500000
+ WHERE DEPART = 2;   
+
+-- 삭제
+/*
+    DELETE
+      FROM 테이블명
+     WHERE 조건식
+*/
+-- 1. 지역이 '인천'인 부서를 삭제하시오 ('인천'에 근무하는 사원이 없다)
+DELETE
+  FROM DEPARTMENT_T
+ WHERE LOCATION='인천';
+ 
+ -- 2. 지역이 '서울'인 부서를 삭제하시오 ('서울'에 근무하는 사원이 있다 -> ON DELETE SET NULL 옵션에 의해 부서정보가 NULL 값으로 처리됨) 삭제 옵션 없었다면 삭제 자체가 안됨
+DELETE
+  FROM DEPARTMENT_T
+ WHERE LOCATION ='서울'; --EMPLOYEE 테이블 보면 NULL로 바뀌어있음
+  
