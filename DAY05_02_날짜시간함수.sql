@@ -1,4 +1,4 @@
---날짜: DATE, TIMESTAMP, VARCHAR2 등 회사마다 다르게 사용
+-- 날짜: DATE, TIMESTAMP, VARCHAR2 등 회사마다 다르게 사용
 -- 1. 현재 날짜 및 시간
 
 -- 오라클이 설치된 서버 기준 시간 
