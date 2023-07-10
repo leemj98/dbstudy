@@ -115,7 +115,7 @@ SELECT E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME -- 사원정보
 
 -- 9. 각 사원 중에서 매니저보다 먼저 입사한 사원을 조회하시오. (SELF JOIN)
 -- 1) ANSI
-
+SELECT E.
 
 -- 2) 오라클
 
@@ -123,5 +123,10 @@ SELECT E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME -- 사원정보
 
 -- 10. 같은 부서에 근무하는 사원 중에서 나보다 SALARY가 높은 사원 정보를 조회하시오. (SELF JOIN)
 -- 1) ANSI
+SELECT EMPLOYEE_ID
+  FROM 
+
+사원 중 나보다 샐러리 높은 사원
+같은 부서
 
 -- 2) 오라클

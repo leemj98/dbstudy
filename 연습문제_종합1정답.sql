@@ -148,7 +148,7 @@ SELECT USER_NO AS 번호
 -- 잡화      2
 -- 의류      2
 SELECT P.PROD_CATEGORY AS 카테고리
-     , COUNT(B.BUY_NO) AS 구매횟수
+     , COUNT(B.BUY_NO) AS 구매횟수 --그룹화할때는 BOY_AMOUNT가 아니라 카운트로 세줘야하는듯
   FROM PRODUCT_T P INNER JOIN BUY_T B
     ON P.PROD_CODE = B.PROD_CODE
  GROUP BY P.PROD_CATEGORY;
@@ -185,6 +185,7 @@ SELECT U.USER_ID AS 아이디
     ON U.USER_NO = B.USER_NO
  GROUP BY U.USER_ID, U.USER_NAME
  ORDER BY U.USER_ID;
+ -- NVL 없는데 0으로 나오는 이유: 외부조인했기 때문임. 외부 조인시 NULL이 숫자면 자동으로 0으로 설정된다고 함 (확실 ㄴㄴ)
 
 
 -- 11. 모든 제품의 제품명과 판매횟수를 조회하시오. 판매 이력이 없는 제품은 0으로 조회하시오.

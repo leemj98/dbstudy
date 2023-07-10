@@ -87,16 +87,23 @@ COMMIT;
 /****************************** 문 제 ****************************************/
 
 -- 1. 연락처1이 없는 사용자의 사용자번호, 아이디, 연락처1, 연락처2를 조회하시오.
-
+SELECT USER_NO, USER_ID, USER_MOBILE1, USER_MOBILE2
+  FROM USER_T
+ WHERE USER_MOBILE1 IS NULL;
 
 -- 2. 연락처2가 '5'로 시작하는 사용자의 사용자번호, 아이디, 연락처1, 연락처2를 조회하시오.
-
+SELECT USER_NO, USER_ID, USER_MOBILE1, USER_MOBILE2
+  FROM USER_T
+ WHERE USER_MOBILE2 LIKE '5%';
 
 -- 3. 2010년 이후에 가입한 사용자의 사용자번호, 아이디, 가입일을 조회하시오.
+SELECT USER_NO, USER_ID, USER_REGDATE
+  FROM USER_T;
 
 
 -- 4. 사용자번호와 연락처1, 연락처2를 연결하여 조회하시오. 연락처가 없는 경우 NULL 대신 'None'으로 조회하시오.
-
+SELECT CONCAT(CONCAT(USER_NO, NVL(USER_MOBILE1,'None')), NVL(USER_MOBILE2, 'None'))
+  FROM USER_T;
 
 -- 5. 지역별 사용자수를 조회하시오.
 -- 주소   사용자수
@@ -105,14 +112,19 @@ COMMIT;
 -- 서울   4
 -- 경기   2
 -- 충남   1
-
+SELECT USER_ADDR, COUNT(USER_NO)
+  FROM USER_T
+ GROUP BY USER_ADDR;
 
 -- 6. '서울', '경기'를 제외한 지역별 사용자수를 조회하시오.
 -- 주소   사용자수
 -- 경북   1
 -- 경남   2
 -- 충남   1
-
+SELECT USER_ADDR, COUNT(*)
+  FROM USER_T
+ WHERE USER_ADDR NOT IN ('서울','경기')
+ GROUP BY USER_ADDR;
 
 -- 7. 구매내역이 없는 사용자를 조회하시오.
 -- 번호  아이디
@@ -121,6 +133,9 @@ COMMIT;
 -- 7     SDY
 -- 3     KKJ
 -- 9     LKK
+SELECT USER_NO, USER_ID
+  FROM USER_T
+ WHERE USER_NO NOT IN (SELECT USER_NO FROM BUY_T);
 
 
 -- 8. 카테고리별 구매횟수를 조회하시오.
@@ -131,6 +146,7 @@ COMMIT;
 -- 의류      2
 
 
+  
 -- 9. 아이디별 구매횟수를 조회하시오.
 -- 아이디  구매횟수
 -- KHD     3
@@ -138,7 +154,10 @@ COMMIT;
 -- KYM     1
 -- KJD     1
 -- PSH     3
-
+SELECT U.USER_ID, COUNT(B.BUY_NO)
+  FROM USER_T U INNER JOIN BUY_T B
+    ON U.USER_NO = B.USER_NO
+ GROUP BY U.USER_ID;
 
 -- 10. 아이디별 구매횟수를 조회하시오. 구매 이력이 없는 경우 구매횟수는 0으로 조회하고 아이디의 오름차순으로 조회하시오.
 -- 아이디  고객명  구매횟수
@@ -152,6 +171,12 @@ COMMIT;
 -- PSH     박수홍  3
 -- SDY     신동엽  0
 -- YJS     유재석  0
+SELECT U.USER_ID, NVL(COUNT(B.BUY_NO),0)
+  FROM USER_T U LEFT OUTER JOIN BUY_T B
+    ON U.USER_NO = B.USER_NO
+ GROUP BY U.USER_ID
+ ORDER BY U.USER_ID;
+
 
 -- 11. 모든 제품의 제품명과 판매횟수를 조회하시오. 판매 이력이 없는 제품은 0으로 조회하시오.
 -- 제품명  판매횟수
@@ -162,6 +187,17 @@ COMMIT;
 -- 모니터  2개
 -- 책      2개
 -- 벨트    0개
+SELECT P.PROD_NAME, CONCAT(NVL(COUNT(B.BUY_NO),0),'개')
+  FROM PRODUCT_T P LEFT OUTER JOIN BUY_T B
+    ON P.PROD_CODE = B.PROD_CODE
+ GROUP BY P.PROD_NAME;
+    
+
+
+
+
+
+
 SELECT P.PROD_NAME AS 제품명,
        CONCAT(COUNT(B.BUY_NO), '개') AS 판매횟수
   FROM PRODUCT_T P LEFT OUTER JOIN BUY_T B
@@ -174,6 +210,11 @@ SELECT P.PROD_NAME AS 제품명,
 -- 김용만  모니터  200
 -- 박수홍  모니터  1000
 -- 박수홍  메모리  800
+SELECT U.USER_NAME AS 고객명, P.PROD_NAME AS 제품명, P.PROD_PRICE AS 구매액
+  FROM USER_T U INNER JOIN BUY_T B
+    ON U.USER_NO = B.USER_NO INNER JOIN PRODUCT_T P
+    ON B.PROD_CODE = P.PROD_CODE
+ WHERE P.PROD_CATEGORY = '전자';
 
 -- 13. 제품을 구매한 이력이 있는 고객의 아이디, 고객명, 구매횟수, 총구매액을 조회하시오.
 -- 아이디  고객명  구매횟수  총구매액
@@ -182,7 +223,7 @@ SELECT P.PROD_NAME AS 제품명,
 -- KJD     김제동  1         75
 -- LHJ     이휘재  2         80
 -- KHD     강호동  3         1210
-
+SELECT U.USER_ID, U.USER_NAME, 
 
 -- 14. 구매횟수가 2회 이상인 고객명과 구매횟수를 조회하시오.
 -- 고객명  구매횟수
