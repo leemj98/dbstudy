@@ -223,14 +223,21 @@ SELECT U.USER_NAME AS 고객명, P.PROD_NAME AS 제품명, P.PROD_PRICE AS 구�
 -- KJD     김제동  1         75
 -- LHJ     이휘재  2         80
 -- KHD     강호동  3         1210
-SELECT U.USER_ID, U.USER_NAME, 
+SELECT U.USER_ID, U.USER_NAME, COUNT(B.BUY_NO), P.PROD_PRICE*B.BUY_AMOUNT
+  FROM USER_T U INNER JOIN BUY_T B
+    ON U.USER_NO=B.USER_NO INNER JOIN PRODUCT_T P
+    ON P.PROD_CODE=B.PROD_CODE;
 
 -- 14. 구매횟수가 2회 이상인 고객명과 구매횟수를 조회하시오.
 -- 고객명  구매횟수
 -- 이휘재  2
 -- 박수홍  3
 -- 강호동  3
-
+SELECT U.USER_NAME AS 고객명, COUNT(B.BUY_NO) AS 구매횟수
+  FROM USER_T U INNER JOIN BUY_T B
+    ON U.USER_NO = B.USER_NO
+ GROUP BY U.USER_NAME
+HAVING COUNT(B.BUY_NO) >=2;
 
 -- 15. 어떤 고객이 어떤 제품을 구매했는지 조회하시오. 구매 이력이 없는 고객도 조회하고 아이디로 오름차순 정렬하시오.
 -- 고객명   구매제품
@@ -249,20 +256,25 @@ SELECT U.USER_ID, U.USER_NAME,
 -- 박수홍   메모리
 -- 신동엽   NULL
 -- 유재석   NULL
-
+SELECT U.USER_NAME AS 고객명, P.PROD_NAME AS 구매제품
+  FROM USER_T U LEFT OUTER JOIN BUY_T B
+    ON U.USER_NO = B.USER_NO LEFT OUTER JOIN PRODUCT_T P
+    ON P.PROD_CODE = B.PROD_CODE
+ ORDER BY U.USER_ID;
+ 
 
 -- 16. 제품 테이블에서 제품명이 '책'인 제품의 카테고리를 '서적'으로 수정하시오.
-
+UPDATE PRODUCT_T
+   SET PROD_NAME = '서적'
+ WHERE PROD_NAME = '책';
+COMMIT;
 
 -- 17. 연락처1이 '011'인 사용자의 연락처1을 모두 '010'으로 수정하시오.
-
+UPDATE USER_T
+   SET USER_MOBILE1 = '010'
+ WHERE USER_MOBILE1 = '011';
 
 -- 18. 구매번호가 가장 큰 구매내역을 삭제하시오.
-
-
-SELECT BUY_SEQ.CURRVAL
-  FROM DUAL; --CURRVAL: 시퀀스가 현재 얼마까지 값을 생성했는지 알려주는 것
-
 
 -- 19. 제품코드가 1인 제품을 삭제하시오. 삭제 이후 제품번호가 1인 제품의 구매내역이 어떻게 변하는지 조회하시오.
 DELETE
@@ -273,6 +285,7 @@ SELECT *
   FROM PRODUCT_T;
 
 -- 20. 사용자번호가 5인 사용자를 삭제하시오. 사용자번호가 5인 사용자의 구매 내역을 먼저 삭제한 뒤 진행하시오.
+
 
 
 외래키 삭제 조건이 없으면 삭제 자체가 안됨ㅁ - 사용자번호 5인 사용자 *구매 내역* 머저 지우는 것밖에 방법 없음

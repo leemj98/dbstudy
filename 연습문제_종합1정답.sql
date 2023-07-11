@@ -293,7 +293,7 @@ COMMIT;
 DELETE
   FROM BUY_T
  WHERE BUY_NO = (SELECT BUY_SEQ.CURRVAL
-                   FROM DUAL);
+                   FROM DUAL); --CURRVAL: 시퀀스가 현재 얼마까지 값을 생성했는지 알려주는 것
 
 -- 19. 제품코드가 1인 제품을 삭제하시오. 삭제 이후 제품번호가 1인 제품의 구매내역이 어떻게 변하는지 조회하시오.
 -- 삭제 전 구매내역
