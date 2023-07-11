@@ -24,9 +24,6 @@ SELECT *
  WHERE JOB_ID IN ('IT_PROG', 'ST_MAN');
 
 -- 6. EMPLOYEES 테이블에서 HIRE_DATE가 2005년도인 사원을 조회하시오.
-SELECT *
-  FROM EMPLOYEES
- WHERE HIRE_DATE = 05; 
 
 
 -- 7. EMPLOYEES 테이블에서 MANAGER_ID가 없는 사원을 조회하시오.
@@ -60,10 +57,11 @@ SELECT *
   FROM EMPLOYEES
  WHERE DEPARTMENT_ID = 80
  ORDER BY SALARY DESC;
+ 
+
 
 -- 13. EMPLOYEES 테이블에서 전체 사원의 근무 개월 수를 정수로 조회하시오. 1개월 1일을 근무했다면 2개월을 근무한 것으로 처리해서 조회하시오.
-SELECT CEIL(MONTHS_BETWEEN(SYSDATE, TO_DATE(HIRE_DATE)))
-  FROM EMPLOYEES;
+
 
 -- 14. EMPLOYEES 테이블에서 PHONE_NUMBER에 따른 지역(REGION)을 조회하시오.
 -- PHONE_NUMBER가 011로 시작하면 'MOBILE', 515로 시작하면 'EAST', 590으로 시작하면 'WEST', 603으로 시작하면 'SOUTH', 650으로 시작하면 'NORTH'로 조회하시오.
