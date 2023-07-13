@@ -1,3 +1,7 @@
+/*
+    기초데이터 준비
+    HR 계정의 EMPLOYEES 테이블을 GD 계정으로 복사해서 사용
+*/
 
 DROP TABLE EMPLOYEES;
 CREATE TABLE EMPLOYEES AS (
@@ -268,7 +272,7 @@ BEGIN
         SELECT MOD(N, 3) INTO MODULAR -- MOD(N,3): N을 3으로 나눈 나머지 -> MODULAR 변수에 저장
           FROM DUAL;
         IF MODULAR = 0 THEN 
-            CONTINUE; -- WHILE TRUE LOOP문의 첫 실행문으로 되돌아가서 실행하시오 (그러니까 누적단계까지 못가는거)
+            CONTINUE; -- WHILE TRUE LOOP문의 첫 실행문으로 되돌아가서 실행하시오 (누적단계까지 못가도록)
         END IF;
         -- 누적
         TOTAL := TOTAL + N;
